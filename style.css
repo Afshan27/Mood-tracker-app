@@ -1,0 +1,408 @@
+/* Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body, html {
+  height: 100%;
+  width: 100%;
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(135deg, #a1c4fd, #c2e9fb);
+  color: #222;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+  user-select: none;
+}
+
+/* Floating emojis background */
+.floating-emojis {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.floating-emojis span {
+  position: absolute;
+  font-size: 3rem;
+  opacity: 0.15;
+  animation-name: floatUpDown;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in-out;
+  animation-duration: 8s;
+  filter: drop-shadow(0 0 4px #556cd6);
+}
+
+.floating-emojis span:nth-child(1) { left: 10%; top: 90%; animation-delay: 0s; }
+.floating-emojis span:nth-child(2) { left: 25%; top: 85%; animation-delay: 2s; }
+.floating-emojis span:nth-child(3) { left: 40%; top: 92%; animation-delay: 1.5s; }
+.floating-emojis span:nth-child(4) { left: 60%; top: 89%; animation-delay: 3s; }
+.floating-emojis span:nth-child(5) { left: 75%; top: 94%; animation-delay: 0.5s; }
+.floating-emojis span:nth-child(6) { left: 85%; top: 90%; animation-delay: 4s; }
+.floating-emojis span:nth-child(7) { left: 50%; top: 95%; animation-delay: 2.5s; }
+.floating-emojis span:nth-child(8) { left: 30%; top: 93%; animation-delay: 3.5s; }
+
+@keyframes floatUpDown {
+  0%, 100% { transform: translateY(0); opacity: 0.15; }
+  50% { transform: translateY(-30px); opacity: 0.3; }
+}
+
+/* Header */
+header {
+  background-color: rgba(255 255 255 / 0.75);
+  padding: 0.8rem 2rem;
+  box-shadow: 0 0 10px #7587f8aa;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  position: relative;
+  z-index: 10;
+  border-radius: 0 0 16px 16px;
+}
+
+nav button {
+  background: none;
+  border: none;
+  font-size: 1.7rem;
+  cursor: pointer;
+  margin-left: 1.5rem;
+  color: #556cd6;
+  transition: transform 0.2s ease, color 0.3s ease;
+  filter: drop-shadow(0 0 3px #556cd6);
+}
+
+nav button:hover {
+  transform: scale(1.3);
+  color: #334477;
+  filter: drop-shadow(0 0 10px #334477);
+}
+
+/* Main container */
+main {
+  flex-grow: 1;
+  max-width: 600px;
+  margin: 2rem auto 3rem auto;
+  padding: 0 1.5rem;
+  position: relative;
+  z-index: 10;
+  background: rgba(255 255 255 / 0.9);
+  border-radius: 24px;
+  box-shadow: 0 0 18px #7587f8aa;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+/* Section headings */
+h2 {
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: #556cd6;
+  font-size: 1.6rem;
+  text-align: center;
+  user-select: none;
+}
+
+/* Mood Selection */
+.mood-selection .emojis {
+  display: flex;
+  justify-content: center;
+  gap: 1.8rem;
+}
+
+.mood-selection button {
+  font-size: 3.3rem;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.3s ease, filter 0.3s ease;
+  filter: drop-shadow(0 0 4px #556cd6aa);
+  user-select: none;
+  position: relative;
+}
+
+.mood-selection button:hover,
+.mood-selection button:focus {
+  outline: none;
+  transform: scale(1.5);
+  filter: drop-shadow(0 0 12px #556cd6ff);
+  z-index: 5;
+  border-radius: 50%;
+}
+
+/* Mood History */
+.mood-history ul {
+  list-style: none;
+  max-height: 280px;
+  overflow-y: auto;
+  padding: 0 1rem;
+  border-radius: 12px;
+  background: #f5f9ff;
+  box-shadow: inset 0 0 6px #a1c4fd;
+}
+
+.mood-history li {
+  padding: 0.5rem 0;
+  font-size: 1.2rem;
+  border-bottom: 1px solid #dbe8ff;
+  display: flex;
+  justify-content: space-between;
+  color: #334477;
+}
+
+/* Footer */
+footer {
+  text-align: center;
+  padding: 1rem;
+  background-color: rgba(255 255 255 / 0.8);
+  color: #556cd6;
+  font-weight: 600;
+  filter: drop-shadow(0 0 3px #556cd6);
+  user-select: none;
+}
+
+/* Modal Styles */
+.modal {
+  display: none;
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(255 255 255 / 0.95);
+  backdrop-filter: blur(10px);
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  padding: 1rem;
+}
+
+.modal[aria-hidden="false"] {
+  display: flex;
+}
+
+.modal-content {
+  background: #f5f9ff;
+  border-radius: 20px;
+  max-width: 600px;
+  width: 100%;
+  max-height: 80vh;
+  overflow-y: auto;
+  padding: 1.5rem 2rem 2rem 2rem;
+  position: relative;
+  box-shadow:
+    0 2px 8px #a1c4fdaa,
+    0 0 20px #7587f8aa;
+  user-select: none;
+}
+
+/* Modal close button */
+.modal-close {
+  position: absolute;
+  top: 14px;
+  right: 20px;
+  font-size: 2rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #556cd6;
+  transition: color 0.2s ease;
+  user-select: none;
+}
+
+.modal-close:hover {
+  color: #334477;
+}
+
+/* Calendar Grid */
+#calendarGrid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 12px;
+  margin-top: 1rem;
+}
+
+.calendar-day {
+  background: #dbe8ff;
+  border-radius: 14px;
+  padding: 10px 0;
+  font-weight: 600;
+  text-align: center;
+  font-size: 1.1rem;
+  color: #334477;
+  filter: drop-shadow(0 0 3px #556cd6);
+  user-select: none;
+}
+
+.calendar-day.today {
+  background: #7587f8;
+  color: white;
+  filter: drop-shadow(0 0 10px #334477);
+}
+
+/* Mood circle inside calendar */
+.mood-circle {
+  margin: 4px auto 0 auto;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  box-shadow: 0 0 5px #556cd6bb;
+}
+
+.mood-happy { background: #ffd54f; }    /* yellow */
+.mood-sad { background: #42a5f5; }      /* blue */
+.mood-angry { background: #ef5350; }    /* red */
+.mood-calm { background: #26a69a; }     /* teal */
+.mood-excited { background: #ab47bc; }  /* purple */
+
+/* Scrollbar styling for history and modal */
+.mood-history ul::-webkit-scrollbar,
+.modal-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.mood-history ul::-webkit-scrollbar-thumb,
+.modal-content::-webkit-scrollbar-thumb {
+  background: #7587f8aa;
+  border-radius: 10px;
+}
+
+.mood-history ul::-webkit-scrollbar-track,
+.modal-content::-webkit-scrollbar-track {
+  background: transparent;
+}
+body {
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(to bottom right, #e0f7fa, #fce4ec);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem;
+}
+
+.glass {
+  background: rgba(255, 255, 255, 0.25);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.2);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-radius: 1.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: transform 0.2s ease;
+}
+
+.emoji {
+  font-size: 2.5rem;
+  margin-bottom: 0.75rem;
+  transition: transform 0.3s ease;
+}
+
+.mood-card:hover {
+  transform: scale(1.05);
+}
+
+.emoji:hover {
+  transform: scale(1.2);
+}
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Quicksand', sans-serif;
+}
+
+body {
+  background: linear-gradient(135deg, #ffe4e6, #f3e8ff);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.wrapper {
+  width: 100%;
+  max-width: 420px;
+  padding: 2rem;
+}
+
+.calendar {
+  background-color: white;
+  border-radius: 2rem;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.07);
+  padding: 1.5rem;
+}
+
+.calendar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #7c3aed;
+  margin-bottom: 1rem;
+}
+
+.calendar-header h2 {
+  font-size: 1.4rem;
+}
+
+.calendar-header button {
+  background: #e0e7ff;
+  border: none;
+  padding: 0.6rem 1rem;
+  border-radius: 1rem;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.calendar-header button:hover {
+  background: #c7d2fe;
+}
+
+.calendar-weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  text-align: center;
+  font-weight: bold;
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+}
+
+.calendar-days {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 0.4rem;
+}
+
+.calendar-days div {
+  background-color: #fef2f2;
+  border-radius: 1.2rem;
+  padding: 1rem 0.2rem;
+  text-align: center;
+  color: #4b5563;
+  font-size: 1rem;
+  transition: all 0.2s ease-in-out;
+  position: relative;
+}
+
+.calendar-days div:hover {
+  background-color: #fce7f3;
+  transform: scale(1.05);
+}
+
+.today {
+  background-color: #d8b4fe !important;
+  color: white;
+  font-weight: bold;
+  border: 2px solid #a855f7;
+}
+
+.emoji {
+  display: block;
+  font-size: 1.2rem;
+  margin-top: 0.3rem;
+}

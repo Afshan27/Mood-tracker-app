@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Serenity Mood Tracker</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="floating-emojis" aria-hidden="true">
+    <span>😊</span>
+    <span>😢</span>
+    <span>😡</span>
+    <span>😌</span>
+    <span>🤩</span>
+    <span>😊</span>
+    <span>😢</span>
+    <span>😡</span>
+  </div>
+
+  <header>
+    <nav>
+      <button id="clearHistory" title="Clear Mood History" aria-label="Clear Mood History">🗑️</button>
+      <button id="openCalendar" title="View Mood Calendar" aria-label="View Mood Calendar">📅</button>
+    </nav>
+  </header>
+
+  <main>
+    <section class="mood-selection" aria-label="Mood selection">
+      <h2>How are you feeling today?</h2>
+      <div class="emojis" role="list">
+        <button aria-label="Happy" data-mood="happy" title="Happy" role="listitem">😊</button>
+        <button aria-label="Sad" data-mood="sad" title="Sad" role="listitem">😢</button>
+        <button aria-label="Angry" data-mood="angry" title="Angry" role="listitem">😡</button>
+        <button aria-label="Calm" data-mood="calm" title="Calm" role="listitem">😌</button>
+        <button aria-label="Excited" data-mood="excited" title="Excited" role="listitem">🤩</button>
+      </div>
+    </section>
+
+    <section class="mood-history" aria-label="Mood history">
+      <h2>Your Mood History</h2>
+      <ul id="historyList" role="list">
+        <!-- Mood history items inserted here -->
+      </ul>
+    </section>
+  </main>
+
+  <!-- Calendar Modal -->
+  <div id="calendarModal" class="modal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="calendarTitle">
+    <div class="modal-content">
+      <button id="closeCalendar" class="modal-close" aria-label="Close Calendar">&times;</button>
+      <h2 id="calendarTitle">Mood Calendar</h2>
+      <div id="calendarGrid"></div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>🌸 Aesthetic Calendar</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="wrapper">
+    <div class="calendar">
+      <div class="calendar-header">
+        <button id="prev">&#8592;</button>
+        <h2 id="monthYear"></h2>
+        <button id="next">&#8594;</button>
+      </div>
+      <div class="calendar-weekdays">
+        <div>🌞</div><div>🌛</div><div>🌸</div><div>🌿</div><div>🍄</div><div>💖</div><div>✨</div>
+      </div>
+      <div class="calendar-days" id="calendarDays"></div>
+    </div>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Color-Coded Aesthetic Calendar</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Comfortaa&display=swap');
+
+  body {
+    background: #fff8fb;
+    font-family: 'Comfortaa', cursive;
+    display: flex;
+    justify-content: center;
+    padding: 40px 20px;
+    user-select: none;
+  }
+
+  .calendar {
+    width: 350px;
+    background: #ffe6f0;
+    border-radius: 25px;
+    box-shadow: 0 12px 20px rgba(255, 147, 188, 0.4);
+    padding: 25px 25px 35px;
+    color: #9a2b5c;
+  }
+
+  .calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+
+  .month-year {
+    font-weight: 700;
+    font-size: 1.9rem;
+    letter-spacing: 1.2px;
+  }
+
+  .nav-button {
+    background: #ffb3c8;
+    border: none;
+    color: white;
+    font-size: 1.4rem;
+    font-weight: 700;
+    padding: 8px 14px;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    user-select: none;
+  }
+  .nav-button:hover {
+    background: #ff92b3;
+  }
+
+  .weekdays {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    text-align: center;
+    color: #d85c7b;
+    font-weight: 600;
+    margin-bottom: 12px;
+    font-size: 0.95rem;
+    letter-spacing: 0.8px;
+  }
+
+  .weekdays div {
+    padding: 8px 0;
+  }
+
+  .days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 10px;
+  }
+
+  .day {
+    background: #ffd7e5;
+    color: #8a2950;
+    border-radius: 16px;
+    padding: 14px 0;
+    text-align: center;
+    font-weight: 600;
+    font-size: 1.1rem;
+    position: relative;
+    cursor: pointer;
+    transition: background 0.25s ease, color 0.25s ease;
+  }
+
+  .day.empty {
+    background: transparent;
+    cursor: default;
+    box-shadow: none;
+  }
+
+  .day:hover:not(.empty) {
+    background: #ff82a9;
+    color: white;
+  }
+
+  /* Today highlight */
+  .today {
+    box-shadow: 0 0 0 3px #d90429;
+  }
+
+  /* Color-coded event dots */
+  .event-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    position: absolute;
+    bottom: 8px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .event-work {
+    background: #f72585;
+  }
+  .event-study {
+    background: #720026;
+  }
+  .event-fun {
+    background: #ffb3c1;
+  }
+  .event-important {
+    background: #d90429;
+  }
+
+</style>
+</head>
+<body>
+  <div class="calendar">
+    <div class="calendar-header">
+      <button class="nav-button" id="prevMonth">&#8592;</button>
+      <div class="month-year" id="monthYear"></div>
+      <button class="nav-button" id="nextMonth">&#8594;</button>
+    </div>
+
+    <div class="weekdays">
+      <div>Sun</div>
+      <div>Mon</div>
+      <div>Tue</div>
+      <div>Wed</div>
+      <div>Thu</div>
+      <div>Fri</div>
+      <div>Sat</div>
+    </div>
+
+    <div class="days" id="daysContainer"></div>
+  </div>
+
+<script>
+  const monthYearEl = document.getElementById('monthYear');
+  const daysContainer = document.getElementById('daysContainer');
+  const prevBtn = document.getElementById('prevMonth');
+  const nextBtn = document.getElementById('nextMonth');
+
+  const months = [
+    "January", "February", "March", "April",
+    "May", "June", "July", "August",
+    "September", "October", "November", "December"
+  ];
+
+  // Sample events: key = 'YYYY-MM-DD', values = array of event types
+  const events = {
+    "2025-05-03": ['work'],
+    "2025-05-05": ['study'],
+    "2025-05-07": ['fun', 'important'],
+    "2025-05-12": ['work'],
+    "2025-05-15": ['fun'],
+    "2025-05-20": ['important'],
+    "2025-05-25": ['study', 'work'],
+    "2025-06-01": ['fun'],
+    "2025-06-10": ['work', 'important'],
+  };
+
+  let currentDate = new Date();
+
+  function isToday(dateObj) {
+    const now = new Date();
+    return (
+      dateObj.getDate() === now.getDate() &&
+      dateObj.getMonth() === now.getMonth() &&
+      dateObj.getFullYear() === now.getFullYear()
+    );
+  }
+
+  function formatDateKey(year, month, day) {
+    // Format date as YYYY-MM-DD with leading zeros
+    const mm = (month + 1).toString().padStart(2, '0');
+    const dd = day.toString().padStart(2, '0');
+    return `${year}-${mm}-${dd}`;
+  }
+
+  function renderCalendar() {
+    const year = currentDate.getFullYear();
+    const month = currentDate.getMonth();
+
+    monthYearEl.textContent = `${months[month]} ${year}`;
+
+    daysContainer.innerHTML = '';
+
+    // First day of month (0 = Sunday)
+    const firstDay = new Date(year, month, 1).getDay();
+    // Number of days in month
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+    // Fill empty slots before first day
+    for(let i = 0; i < firstDay; i++) {
+      const emptyDiv = document.createElement('div');
+      emptyDiv.classList.add('day', 'empty');
+      daysContainer.appendChild(emptyDiv);
+    }
+
+    // Fill all days
+    for(let day = 1; day <= daysInMonth; day++) {
+      const dayDiv = document.createElement('div');
+      dayDiv.classList.add('day');
+      dayDiv.textContent = day;
+
+      const dateKey = formatDateKey(year, month, day);
+
+      // Highlight today
+      if (isToday(new Date(year, month, day))) {
+        dayDiv.classList.add('today');
+      }
+
+      // Add event dots if any events on this date
+      if (events[dateKey]) {
+        events[dateKey].forEach(eventType => {
+          const dot = document.createElement('span');
+          dot.classList.add('event-dot', `event-${eventType}`);
+          dayDiv.appendChild(dot);
+        });
+      }
+
+      daysContainer.appendChild(dayDiv);
+    }
+  }
+
+  prevBtn.addEventListener('click', () => {
+    currentDate.setMonth(currentDate.getMonth() - 1);
+    renderCalendar();
+  });
+
+  nextBtn.addEventListener('click', () => {
+    currentDate.setMonth(currentDate.getMonth() + 1);
+    renderCalendar();
+  });
+
+  // Initial render
+  renderCalendar();
+</script>
+</body>
+</html>
+
